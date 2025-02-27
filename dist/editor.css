@@ -1,0 +1,80 @@
+/********* edior/line styles *********/
+.cm-editor .cm-line {
+  padding-inline-start: 1ch;
+  padding-inline-end: 5ch;
+}
+
+/********* gutter/fold styles *********/
+.fold-marker.material-icons {
+  font-size: 1rem;
+}
+
+.cm-lineNumbers .cm-gutterElement {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cm-lineNumbers .cm-gutterElement:empty {
+  cursor: default;
+}
+
+.cm-editor .cm-gutters {
+  background: none;
+}
+
+/********* scene elements *********/
+.cm-editor .scene-headings {
+  font-weight: bold;
+}
+
+.scene-headings-mark {
+  opacity: 0;
+  display: inline-block;
+  margin-inline-start: -1ch;
+}
+
+.scene-character,
+.scene-dialogue,
+.scene-character + .scene-empty,
+.scene-dialogue + .scene-empty {
+  text-align: center;
+  max-width: 40ch;
+  margin: auto;
+}
+
+.scene-character-span-mark {
+  opacity: 1;
+  display: none;
+}
+
+.cm-activeLine .scene-character-span-mark {
+  display: inline;
+  opacity: 0.5;
+}
+
+.scene-character-span {
+  font-weight: bold;
+}
+
+.scene-transition {
+  text-align: end;
+  font-style: italic;
+}
+
+.scene-transition-mark {
+  opacity: 0;
+}
+
+.cm-activeLine .scene-transition-mark {
+  opacity: 0.5;
+}
+
+/********* completion styles *********/
+.cm-editor .cm-completionIcon-character {
+  width: auto;
+  padding: 0;
+}
+
+.cm-completionIcon-character:before {
+  content: "👤";
+}
