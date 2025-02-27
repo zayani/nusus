@@ -1,7 +1,15 @@
+.cm-editor {
+  height: 100vh;
+  direction: rtl;
+  max-width: 80ch;
+  margin: 0 auto;
+  background: #fff;
+}
+
 /********* edior/line styles *********/
 .cm-editor .cm-line {
-  padding-inline-start: 1ch;
-  padding-inline-end: 5ch;
+  padding-right: 1ch;
+  padding-left: 5ch;
 }
 
 /********* gutter/fold styles *********/
@@ -35,8 +43,8 @@
 
 .scene-character,
 .scene-dialogue,
-.scene-character + .scene-empty,
-.scene-dialogue + .scene-empty {
+.scene-character + .line-empty,
+.scene-dialogue + .line-empty {
   text-align: center;
   max-width: 40ch;
   margin: auto;

@@ -1,18 +1,18 @@
 import { foldService, codeFolding, foldGutter } from "@codemirror/language";
-import { isSceneHeader } from "./helpers";
+import { scene, lineIs } from "./helpers";
 
 // Custom folding service for scenes
 const sceneFoldService = (state, lineStart) => {
   const line = state.doc.lineAt(lineStart);
 
   // Check if this line is a scene header
-  if (!isSceneHeader(state, line)) return null;
+  if (!lineIs[scene.headings](state, line)) return null;
 
   // Find the end of this scene (the next scene header or end of document)
   let endLine = line.number;
   for (let i = line.number + 1; i <= state.doc.lines; i++) {
     const currentLine = state.doc.line(i);
-    if (isSceneHeader(state, currentLine)) {
+    if (lineIs[scene.headings](state, currentLine)) {
       endLine = i - 1;
       break;
     }

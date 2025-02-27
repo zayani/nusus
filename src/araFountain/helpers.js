@@ -1,29 +1,40 @@
 // Scene type class names for styling
-export const sceneTypes = {
-  empty: "scene-empty",
+export const scene = {
+  empty: "line-empty",
   headings: "scene-headings",
-  action: "scene-action",
   character: "scene-character",
   dialogue: "scene-dialogue",
   transition: "scene-transition",
+  center: "line-center",
+  action: "scene-action", //must be last
 };
 
+export const needsSpecialMarker = [scene.headings, scene.transition];
+
 // Helper functions for line classification
-export const isEmptyLine = (line) => line.text.trim() === "";
+export const lineIs = {
+  [scene.empty]: (state, line) => line.text.trim() === "",
+  [scene.headings]: (state, line) =>
+    line.text.startsWith(".") && !line.text.startsWith(".."),
+  [scene.character]: (state, line) => line.text.startsWith("@"),
+  [scene.dialogue]: (state, line, prevType) => {
+    if (prevType)
+      return prevType === scene.character || prevType === scene.dialogue;
 
-export const isNextLineEmpty = (state, line) =>
-  line.number >= state.doc.lines ||
-  state.doc.lineAt(line.to + 1).text.trim() === "";
+    if (line.number < 1) return false;
 
-export const isSceneHeader = (state, line) =>
-  line.text.startsWith(".") && !line.text.startsWith("..");
+    let prevLine = state.doc.lineAt(line.to - 1);
 
-export const isCharacter = (line, prevType) => line.text.startsWith("@");
-
-export const isDialogue = (line, prevType) =>
-  prevType === sceneTypes.character || prevType === sceneTypes.dialogue;
-
-export const isTransition = (line) => line.text.startsWith(":");
+    return (
+      lineIs[scene.character](state, prevLine) ||
+      lineIs[scene.dialogue](state, prevLine)
+    );
+  },
+  [scene.transition]: (state, line) => line.text.startsWith(":"),
+  [scene.center]: (state, line) =>
+    line.text.startsWith("--") && line.text.endsWith("--"),
+  [scene.action]: (state, line) => true,
+};
 
 // Function to find all character spans with @ prefix
 export const findCharacterSpans = (text, lineFrom) => {

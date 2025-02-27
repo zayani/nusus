@@ -1,12 +1,9 @@
 import { Decoration, ViewPlugin } from "@codemirror/view";
 import {
-  sceneTypes,
-  isEmptyLine,
+  scene,
   findCharacterSpans,
-  isSceneHeader,
-  isCharacter,
-  isDialogue,
-  isTransition,
+  lineIs,
+  needsSpecialMarker,
 } from "./helpers";
 
 export class araFountainClass {
@@ -32,7 +29,14 @@ export class araFountainClass {
 
     const addDecoration = ({ from, to, number }, className) => {
       if (number) {
-        decorations.push(Decoration.line({ class: className }).range(from));
+        decorations.push(
+          Decoration.line({
+            class: className,
+            // ...(className == scene.empty
+            //   ? {}
+            //   : { attributes: { dir: "auto" } }),
+          }).range(from)
+        );
       } else {
         decorations.push(Decoration.mark({ class: className }).range(from, to));
       }
@@ -55,35 +59,27 @@ export class araFountainClass {
       this.removeCharactersInRange(pos_start, to);
 
       // Process each visible line
-      let prevType = sceneTypes.empty;
+      let prevType = scene.empty;
       let line;
 
       for (let pos = pos_start; pos <= to; pos = line.to + 1) {
         line = state.doc.lineAt(pos);
 
-        // Apply appropriate formatting based on line type
-        if (isEmptyLine(line)) {
-          addDecoration(line, (prevType = sceneTypes.empty));
-        } else if (isSceneHeader(state, line)) {
-          addDecoration(line, (prevType = sceneTypes.headings));
-          // Add special marker for the scene header
-          addDecoration(
-            { from: line.from, to: line.from + 1 },
-            sceneTypes.headings + "-mark"
-          );
-        } else if (isCharacter(line, prevType)) {
-          addDecoration(line, (prevType = sceneTypes.character));
-          // Add special marker for the '@' character
-        } else if (isDialogue(line, prevType)) {
-          addDecoration(line, (prevType = sceneTypes.dialogue));
-        } else if (isTransition(line)) {
-          addDecoration(line, (prevType = sceneTypes.transition));
+        let sceneTypes = Object.values(scene);
 
-          // Add special marker for the ':' transition
-          addDecoration(
-            { from: line.from, to: line.from + 1 },
-            sceneTypes.transition + "-mark"
-          );
+        for (let type of sceneTypes) {
+          console.log(type);
+          if (!lineIs[type](state, line, prevType)) continue;
+
+          addDecoration(line, (prevType = type));
+          if (needsSpecialMarker.includes(type)) {
+            addDecoration(
+              { from: line.from, to: line.from + 1 },
+              type + "-mark"
+            );
+          }
+
+          break;
         }
 
         // Find and decorate all character spans in the line
