@@ -68,7 +68,6 @@ export class araFountainClass {
         let sceneTypes = Object.values(scene);
 
         for (let type of sceneTypes) {
-          console.log(type);
           if (!lineIs[type](state, line, prevType)) continue;
 
           addDecoration(line, (prevType = type));
