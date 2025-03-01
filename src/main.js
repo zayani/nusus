@@ -1,8 +1,8 @@
 import { EditorView } from "codemirror";
 import { EditorState } from "@codemirror/state";
-import { arabization } from "./arabization.js";
+import { arabization } from "./araFountain/arabization.js";
 import { araFountain } from "./araFountain/araFountain.js";
-import { cmSetup } from "./cmSetup.js";
+import { cmSetup } from "./araFountain/cmSetup.js";
 
 let startState = EditorState.create({
   doc: `
@@ -38,4 +38,4 @@ let view = new EditorView({
   parent: document.body,
 });
 
-console.log(view, startState);
+console.log(view, startState, 2);

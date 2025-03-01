@@ -3,11 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>نصوص</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="/icons/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
+    <link rel="shortcut icon" href="/icons/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/icons/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="نصوص" />
+    <link rel="manifest" href="/manifest.json" />
+    <!-- <link rel="stylesheet" href="icons/filled.css" /> -->
+    <!-- <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="editor.css" /> -->
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        font-family: sans-serif;
+      }
+
+      body[splash-screen] {
+        background-image: url("/icons/logo.svg");
+        background-size: 50vmin;
+        background-position: center center;
+        background-repeat: no-repeat;
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
   </head>
 
-  <body>
-    h?
-    <script src="main2.js"></script>
+  <body splash-screen="true">
+    <script src="start.js" type="module"></script>
   </body>
 </html>

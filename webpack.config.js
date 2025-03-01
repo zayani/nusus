@@ -4,13 +4,18 @@ module.exports = {
   mode: "development",
   entry: {
     main: "./src/main.js",
-    main2: "./src/main2.js",
+    //start: "./src/start.js",
   },
   devtool: "inline-source-map",
   devServer: {
+    port: 9000,
     static: "./dist",
   },
+  experiments: {
+    //outputModule: true,
+  },
   output: {
+    //module: true,
     filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
   },
