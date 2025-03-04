@@ -1,4 +1,4 @@
-import lib from "./lib.js";
+import { fire } from "./lib.js";
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
 import {
@@ -83,9 +83,9 @@ if (emailLink) {
   signInWithEmailLink(auth, email, window.location.href).catch((error) => {
     console.log("error", error);
     if (auth.currentUser) return;
-    lib.fire("emaillinkError");
+    fire("emaillinkError");
     window.history.pushState({}, document.title, window.location.pathname);
-    lib.fire("authStateChange", { user: auth.currentUser });
+    fire("authStateChange", { user: auth.currentUser });
   });
 }
 
@@ -144,7 +144,7 @@ onAuthStateChanged(auth, async (user) => {
     window.history.pushState({}, document.title, window.location.pathname);
   }
 
-  lib.fire("authStateChange", {
+  fire("authStateChange", {
     user,
     emailLink: emailLinkUnused && emailLink,
   });

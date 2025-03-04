@@ -1,6 +1,6 @@
-import { showPanel, Panel } from "@codemirror/view";
+import { showPanel } from "@codemirror/view";
 import { StateField, StateEffect } from "@codemirror/state";
-import { scene, lineIs } from "./helpers";
+import { scene, lineIs } from "/cm/helpers.js";
 
 function counter(doc) {
   let words = 0,

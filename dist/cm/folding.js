@@ -1,5 +1,5 @@
 import { foldService, codeFolding, foldGutter } from "@codemirror/language";
-import { scene, lineIs } from "./helpers";
+import { scene, lineIs } from "/cm/helpers.js";
 
 // Custom folding service for scenes
 const sceneFoldService = (state, lineStart) => {

@@ -42,6 +42,20 @@
   </head>
 
   <body splash-screen="true">
-    <script src="start.js" type="module"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "@codemirror/state": "https://esm.sh/@codemirror/state@6.5.2/",
+          "@codemirror/autocomplete": "https://esm.sh/@codemirror/autocomplete@6.18.6/",
+          "@codemirror/view": "https://esm.sh/@codemirror/view@6.36.4/",
+          "@codemirror/language": "https://esm.sh/@codemirror/language@6.10.8/",
+          "@codemirror/commands": "https://esm.sh/@codemirror/commands@6.8.0/",
+          "@codemirror/search": "https://esm.sh/@codemirror/search@6.5.10/",
+          "@codemirror/lint": "https://esm.sh/@codemirror/lint@6.8.4/"
+        }
+      }
+    </script>
+
+    <script src="index.js" type="module"></script>
   </body>
 </html>

@@ -132,3 +132,7 @@ out
 
 ##
 .txt
+.firebase/
+.cache
+functions/.env.nusus-9dbf5
+.firebase/hosting.ZGlzdA.cache

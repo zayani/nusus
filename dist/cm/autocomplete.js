@@ -1,5 +1,5 @@
 import { autocompletion } from "@codemirror/autocomplete";
-import { araFountainCore } from "./decorations";
+import { araFountainCore } from "/cm/decorations.js";
 
 // https://codemirror.net/docs/ref/#autocomplete.autocompletion
 export const charactersAutocomplete = autocompletion({

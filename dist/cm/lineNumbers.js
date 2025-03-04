@@ -1,6 +1,6 @@
 import { lineNumbers } from "@codemirror/view";
 import { toggleFold } from "@codemirror/language";
-import { scene, lineIs } from "./helpers";
+import { scene, lineIs } from "/cm/helpers.js";
 
 // Custom line numbering that only shows numbers for scene headers
 export const headersNumbers = (() => {
@@ -27,7 +27,7 @@ export const headersNumbers = (() => {
       }
 
       // Return the cached header number if this is a header line
-      return headerMap.has(line) ? `${headerMap.get(line)}.` : "";
+      return headerMap.has(line) ? `${headerMap.get(line)}` : "";
     },
 
     domEventHandlers: {

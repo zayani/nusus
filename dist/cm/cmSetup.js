@@ -1,4 +1,5 @@
 import {
+  EditorView,
   lineNumbers,
   highlightActiveLineGutter,
   highlightSpecialChars,
@@ -11,7 +12,6 @@ import {
   gutter,
   GutterMarker,
 } from "@codemirror/view";
-import { EditorView } from "@codemirror/view";
 import { EditorState } from "@codemirror/state";
 import {
   foldGutter,
@@ -38,8 +38,7 @@ import { lintKeymap } from "@codemirror/lint";
 
 const cmSetup = /*@__PURE__*/ (() => [
   //lineNumbers(),
-  //headersNumbers,
-  highlightActiveLineGutter(),
+  //highlightActiveLineGutter(),
   highlightSpecialChars(),
   history(),
   //foldGutter(),

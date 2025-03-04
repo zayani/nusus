@@ -4,7 +4,7 @@ import {
   findCharacterSpans,
   lineIs,
   needsSpecialMarker,
-} from "./helpers";
+} from "/cm/helpers.js";
 
 export class araFountainClass {
   constructor(view) {

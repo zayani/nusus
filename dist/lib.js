@@ -1,75 +1,84 @@
-let evPreFix = "lib_";
+const evPreFix = "lib_";
 
-const lib = {
-  fire(evName, data) {
-    document.dispatchEvent(
-      new CustomEvent(evPreFix + evName, { detail: data })
-    );
-  },
+export function fire(evName, data) {
+  document.dispatchEvent(new CustomEvent(evPreFix + evName, { detail: data }));
+}
 
-  on(evName, cb) {
-    document.addEventListener(evPreFix + evName, (e) => cb(e.detail));
-  },
+export function on(evName, cb) {
+  document.addEventListener(evPreFix + evName, (e) => cb(e.detail));
+}
 
-  uuid: () =>
-    (Date.now().toString(36) + Math.random().toString(36)).replace("0.", ""),
+export const uuid = () =>
+  (Date.now().toString(36) + Math.random().toString(36)).replace("0.", "");
 
-  async resizeImage(file, maxDim = 2048) {
-    const img = await createImageBitmap(file);
+export async function functionresizeImage(file, maxDim = 2048) {
+  const img = await createImageBitmap(file);
 
-    if (img.width <= maxDim && img.height <= maxDim) return file;
+  if (img.width <= maxDim && img.height <= maxDim) return file;
 
-    const resizeRatio = Math.min(maxDim / img.width, maxDim / img.height);
+  const resizeRatio = Math.min(maxDim / img.width, maxDim / img.height);
 
-    const canvas = new OffscreenCanvas(
-      Math.round(img.width * resizeRatio),
-      Math.round(img.height * resizeRatio)
-    );
-    const ctx = canvas.getContext("2d");
+  const canvas = new OffscreenCanvas(
+    Math.round(img.width * resizeRatio),
+    Math.round(img.height * resizeRatio)
+  );
+  const ctx = canvas.getContext("2d");
 
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-    return new Promise((resolve, reject) => {
-      canvas
-        .convertToBlob({ type: "image/jpeg" })
-        .then((blob) => {
-          const jpegFile = new File(
-            [blob],
-            `${file.name.split(".").slice(0, -1).join(".")}.jpeg`,
-            { type: "image/jpeg", lastModified: Date.now() }
-          );
-          resolve(jpegFile);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  },
+  return new Promise((resolve, reject) => {
+    canvas
+      .convertToBlob({ type: "image/jpeg" })
+      .then((blob) => {
+        const jpegFile = new File(
+          [blob],
+          `${file.name.split(".").slice(0, -1).join(".")}.jpeg`,
+          { type: "image/jpeg", lastModified: Date.now() }
+        );
+        resolve(jpegFile);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
 
-  //camelCase to kebab-case
-  toKebabCase: (str) =>
-    str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2").toLowerCase(),
+//camelCase to kebab-case
+export const toKebabCase = (str) =>
+  str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2").toLowerCase();
 
-  flattenObject(obj, sp = ".") {
-    const result = {};
+export function flattenObject(obj, sp = ".") {
+  const result = {};
 
-    for (const key in obj) {
-      if (typeof obj[key] === "object" && obj[key] !== null) {
-        const flatObject = lib.flattenObject(obj[key], sp);
-        for (const nestedKey in flatObject) {
-          result[key + sp + nestedKey] = flatObject[nestedKey];
-        }
-      } else {
-        result[key] = obj[key];
+  for (const key in obj) {
+    if (typeof obj[key] === "object" && obj[key] !== null) {
+      const flatObject = lib.flattenObject(obj[key], sp);
+      for (const nestedKey in flatObject) {
+        result[key + sp + nestedKey] = flatObject[nestedKey];
       }
+    } else {
+      result[key] = obj[key];
     }
+  }
 
-    return result;
-  },
+  return result;
+}
 
-  askUserInput: async (question, defaultValue = "") => {
-    return prompt(question, defaultValue);
-  },
+export const askUserInput = async (question, defaultValue = "") => {
+  return prompt(question, defaultValue);
 };
 
-export default lib;
+export const importCSS = (hrefs) =>
+  Promise.all(
+    hrefs.map(
+      (href) =>
+        new Promise((resolve, reject) => {
+          const link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.href = href;
+          link.onload = resolve;
+          link.onerror = reject;
+          document.head.appendChild(link);
+        })
+    )
+  );
